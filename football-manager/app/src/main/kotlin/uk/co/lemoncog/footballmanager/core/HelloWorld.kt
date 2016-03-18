@@ -1,4 +1,4 @@
-package uk.co.lemoncog.footballmanager
+package uk.co.lemoncog.footballmanager.core
 
 /**
  * Created by jason on 18/03/16.

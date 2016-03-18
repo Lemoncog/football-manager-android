@@ -1,8 +1,10 @@
-package uk.co.lemoncog.footballmanager
+package uk.co.lemoncog.footballmanager.android
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import uk.co.lemoncog.footballmanager.core.HelloWorld
+import uk.co.lemoncog.footballmanager.R
 
 class MainActivity : AppCompatActivity() {
 
