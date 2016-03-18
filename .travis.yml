@@ -25,7 +25,6 @@ android:
 
 env:
   global:
-    - REPO="football-manager-android"
-    - CI_HOME=`pwd`/$REPO
+    - CI_HOME=`pwd`
 
 script: ./build.sh
