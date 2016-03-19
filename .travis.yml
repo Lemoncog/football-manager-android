@@ -30,3 +30,5 @@ env:
 
 
 script: ./build.sh
+after_success: ./upload.sh
+after_failure: ./errors.sh
