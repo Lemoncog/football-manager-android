@@ -26,6 +26,10 @@ android {
     }
 }
 
+android.testOptions.unitTests.all {
+    jvmArgs "-XX:MaxPermSize=256m"
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
