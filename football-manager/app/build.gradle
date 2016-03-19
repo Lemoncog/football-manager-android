@@ -1,6 +1,26 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+Integer getVersionCode() {
+    if(System.env.TRAVIS_BUILD_NUMBER != null) {
+        return Integer.getInteger("$System.env.TRAVIS_BUILD_NUMBER")
+    }
+
+    return 0;
+}
+
+task testVersions() {
+    println getVersionName() + ' & ' + getVersionCode()
+}
+
+String getVersionName() {
+    if(System.env.TRAVIS_BUILD_NUMBER != null) {
+        return "0.0.$System.env.TRAVIS_BUILD_NUMBER"
+    }
+
+    return "1.2.3"
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "21.1.2"
@@ -9,8 +29,8 @@ android {
         applicationId "uk.co.lemoncog.footballmanager"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode getVersionCode()
+        versionName getVersionName()
     }
 
     sourceSets {
