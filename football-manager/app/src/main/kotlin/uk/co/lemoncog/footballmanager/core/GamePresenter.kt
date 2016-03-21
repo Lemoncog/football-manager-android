@@ -3,6 +3,10 @@ package uk.co.lemoncog.footballmanager.core
 class GamePresenter(val view: StatefulView<GameViewModel>, val dataProvider: DataProvider<GameModel>) {
     val actionListeners = mutableListOf<ActionListener>();
 
+    init {
+        view.setAcceptClickedListener { onAcceptClicked() }
+    }
+
     fun onReady() {
         var success = { gameModel: GameModel ->  view.show(gameModelTogameViewModel(gameModel)) }
         var failure = {};
