@@ -9,9 +9,20 @@ import uk.co.lemoncog.footballmanager.core.util.parseServerDate
 import java.text.SimpleDateFormat
 import java.util.*
 
-class GamePresenterTest : StatefulView<GameViewModel> {
+class TestDataProvider() : DataProvider<GameModel> {
+    override fun get(success: (GameModel) -> Unit, failure: () -> Unit) {
+        success(GameModel(0, "Jessica", "JessicaDescr", Date(), Date(), Date()));
+    }
+}
+
+class GamePresenterTest : StatefulView<GameViewModel>, ActionListener {
 
     var showCalled: Boolean = false;
+    var onTriggered: Boolean = false;
+
+    override fun onTrigger() {
+        onTriggered = true;
+    }
 
     override fun show(viewData: GameViewModel) {
         showCalled = true;
@@ -29,7 +40,14 @@ class GamePresenterTest : StatefulView<GameViewModel> {
     }
 
     @Test
-    fun givenUserAcceptsAGameEventIsEmitted() {
-        fail("Implement this sausage")
+    fun givenUserAccepts_ThAGameEventIsEmenitted() {
+        val dataProvider = TestDataProvider();
+        val presenter = GamePresenter(this, dataProvider);
+
+        presenter.actionListeners.add(this);
+
+        presenter.onAcceptClicked();
+
+        assertTrue("Expected onTriggered to be called", onTriggered);
     }
 }

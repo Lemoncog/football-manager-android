@@ -2,8 +2,6 @@ package uk.co.footballmanager
 
 import org.junit.Assert
 import org.junit.Test
-import uk.co.lemoncog.footballmanager.core.GameViewModel
-import uk.co.lemoncog.footballmanager.core.StatefulView
 import uk.co.lemoncog.footballmanager.core.util.parseServerDate
 import java.util.*
 
