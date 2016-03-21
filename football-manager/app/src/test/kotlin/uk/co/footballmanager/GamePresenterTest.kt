@@ -33,7 +33,7 @@ interface DataProvider<T> {
 
 class TestDataProvider() : DataProvider<GameModel> {
     override fun get(success: (GameModel) -> Unit, failure: () -> Unit) {
-
+        success(GameModel("Jessica"));
     }
 }
 
