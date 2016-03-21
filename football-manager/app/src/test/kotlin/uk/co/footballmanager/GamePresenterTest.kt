@@ -4,39 +4,10 @@ import org.junit.Assert
 import org.junit.Test
 
 import org.junit.Assert.*
-
-
-
-data class GameModel(val name: String);
-data class GameViewModel(val name: String);
-
-interface StatefulView<T> {
-    fun show(viewData: T);
-}
-
-class GamePresenter(val view: StatefulView<GameViewModel>,val dataProvider: DataProvider<GameModel>) {
-    fun onReady() {
-        var success = { gameModel: GameModel ->  view.show(gameModelTogameViewModel(gameModel)) }
-        var failure = {};
-
-        dataProvider.get(success, failure);
-    }
-
-    fun gameModelTogameViewModel(gameModel: GameModel) : GameViewModel {
-        return GameViewModel("Sam");
-    }
-}
-
-interface DataProvider<T> {
-    fun get(success: (T) -> Unit, failure: () -> Unit);
-}
-
-class TestDataProvider() : DataProvider<GameModel> {
-    override fun get(success: (GameModel) -> Unit, failure: () -> Unit) {
-        success(GameModel("Jessica"));
-    }
-}
-
+import uk.co.lemoncog.footballmanager.core.*
+import uk.co.lemoncog.footballmanager.core.util.parseServerDate
+import java.text.SimpleDateFormat
+import java.util.*
 
 class GamePresenterTest : StatefulView<GameViewModel> {
 
@@ -55,5 +26,18 @@ class GamePresenterTest : StatefulView<GameViewModel> {
         presenter.onReady();
 
         assertTrue("Expected show to be called", showCalled);
+    }
+
+    @Test
+    fun testParsingServerDate() {
+        val date = parseServerDate("2016-03-17T09:15:00.000Z");
+
+        val cal = Calendar.getInstance();
+        cal.set(2016, 2, 17, 9, 15, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        val actualDate = cal.time;
+
+
+        assertEquals(date.time, actualDate.time);
     }
 }

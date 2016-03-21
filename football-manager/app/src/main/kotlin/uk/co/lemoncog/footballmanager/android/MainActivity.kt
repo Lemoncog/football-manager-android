@@ -14,5 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         var textView: TextView = findViewById(R.id.hello) as TextView;
         textView.text = HelloWorld("Hello Message").message;
+
+        if (savedInstanceState == null) supportFragmentManager.beginTransaction().add(GameFragment(), "game_frag").commit();
     }
 }
