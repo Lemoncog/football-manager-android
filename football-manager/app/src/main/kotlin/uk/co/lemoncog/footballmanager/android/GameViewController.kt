@@ -15,9 +15,14 @@ class GameViewController() {
                 gameRequestController.requestToPlay({
                     userIsAllowedToPlay();
                 }, {
+                    userIsNotAllowedToPlay();
                 });
             }
         })
+    }
+
+    private fun userIsNotAllowedToPlay() {
+
     }
 
     private fun userIsAllowedToPlay() {

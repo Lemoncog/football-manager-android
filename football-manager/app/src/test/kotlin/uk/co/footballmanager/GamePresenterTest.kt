@@ -8,7 +8,7 @@ import java.util.*
 
 class TestDataProvider() : DataProvider<GameModel> {
     override fun get(success: (GameModel) -> Unit, failure: () -> Unit) {
-        success(GameModel(0, "Jessica", "JessicaDescr", Date(), Date(), Date()));
+        success(GameModel(0, "Jessica", "JessicaDescr", Date(), Date(), Date(), arrayOf(firstGameReply, secondGameReply)));
     }
 }
 

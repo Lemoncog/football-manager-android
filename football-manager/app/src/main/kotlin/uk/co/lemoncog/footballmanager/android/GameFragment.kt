@@ -14,7 +14,7 @@ class GameFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.game_fragment, container, false);
 
-        gameViewController.attachView(view!!.findViewById(R.id.latet_game_view) as ViewGroup);
+        gameViewController.attachView(view!!.findViewById(R.id.latest_game_view) as ViewGroup);
 
         return view;
     }
