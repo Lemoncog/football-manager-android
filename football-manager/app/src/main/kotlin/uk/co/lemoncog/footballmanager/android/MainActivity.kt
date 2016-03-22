@@ -11,6 +11,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) supportFragmentManager.beginTransaction().add(R.id.fragment_container, GameFragment(), "game_frag").commit();
+        if (savedInstanceState == null) supportFragmentManager.beginTransaction().add(R.id.fragment_container, GameListFragment(), "game_frag").commit();
     }
 }

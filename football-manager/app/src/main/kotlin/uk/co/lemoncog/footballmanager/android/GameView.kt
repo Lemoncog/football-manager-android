@@ -1,12 +1,13 @@
 package uk.co.lemoncog.footballmanager.android
 
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.core.GameViewModel
 import uk.co.lemoncog.footballmanager.core.StatefulView
 
-class GameView(root: ViewGroup) : StatefulView<GameViewModel> {
+class GameView(root: View) : StatefulView<GameViewModel> {
     val title : TextView = root.findViewById(R.id.game_title) as TextView;
     val whenValue : TextView = root.findViewById(R.id.game_when_value) as TextView;
     val repliesSoFar : TextView = root.findViewById(R.id.game_replies_so_far) as TextView;
