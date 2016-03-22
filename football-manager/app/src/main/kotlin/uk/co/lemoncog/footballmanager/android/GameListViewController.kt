@@ -10,16 +10,22 @@ import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.core.*
 import java.text.SimpleDateFormat
 
+interface GameListClickedListener {
+    fun gameViewClicked(position: Int, gameViewModel: GameViewModel);
+}
+
 class GameListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val gameView = GameView(itemView);
 
 }
 
-class GameListAdapter : RecyclerView.Adapter<GameListViewHolder>() {
+class GameListAdapter(val gameListClickedListener: GameListClickedListener) : RecyclerView.Adapter<GameListViewHolder>() {
     var data : Array<GameViewModel> = emptyArray();
+
 
     override fun onBindViewHolder(holder: GameListViewHolder?, position: Int) {
         holder!!.gameView.show(data[position])
+        holder!!.gameView.setAcceptClickedListener { gameListClickedListener.gameViewClicked(position, data[position]) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): GameListViewHolder? {
@@ -75,7 +81,7 @@ class GameListModelDataProvider : DataProvider<GameListModel> {
     }
 }
 
-class GameListViewController : StatefulView<GameListViewModel> {
+class GameListViewController : StatefulView<GameListViewModel>, GameListClickedListener {
     override fun setAcceptClickedListener(clicked: () -> Unit) {
         throw UnsupportedOperationException()
     }
@@ -87,11 +93,15 @@ class GameListViewController : StatefulView<GameListViewModel> {
 
     lateinit var recyclerView: RecyclerView;
     lateinit var layoutManager: RecyclerView.LayoutManager;
-    val adapter : GameListAdapter = GameListAdapter();
+    lateinit var adapter : GameListAdapter;
     lateinit var gameListPresenter : GameListPresenter;
+
+    val gameRequestController = GameRequestController(GameReplyDataProvider());
 
     fun attachView(viewGroup: ViewGroup) {
         recyclerView = viewGroup.findViewById(R.id.recycler_view) as RecyclerView;
+
+        adapter = GameListAdapter(this);
 
         layoutManager = LinearLayoutManager(viewGroup.context);
         recyclerView.layoutManager = layoutManager;
@@ -108,5 +118,14 @@ class GameListViewController : StatefulView<GameListViewModel> {
      }
 
     fun onPause() {
+    }
+
+    override fun gameViewClicked(position: Int, gameViewModel: GameViewModel) {
+
+        print("gameViewClicked: $position")
+
+        gameRequestController.requestToPlay({
+        }, {
+        });
     }
 }
