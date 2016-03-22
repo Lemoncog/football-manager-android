@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.core.*
+import uk.co.lemoncog.footballmanager.core.util.convertGameModelToViewModel
 import java.text.SimpleDateFormat
 
 interface GameListClickedListener {
@@ -51,10 +52,7 @@ class GameListPresenter(val view: StatefulView<GameListViewModel>, val dataProvi
         val games = mutableListOf<GameViewModel>();
 
         for(gameModel: GameModel in gameListModel.games) {
-            val sdf = SimpleDateFormat("EEE, d MMM yyyy, hh:mm aaa");
-            val prettyDate = sdf.format(gameModel.date);
-
-            games.add(GameViewModel(gameModel.name, gameModel.description, prettyDate, gameModel.replies.count()));
+            games.add(convertGameModelToViewModel(gameModel));
         }
 
         return GameListViewModel(games.toTypedArray());

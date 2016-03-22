@@ -5,11 +5,12 @@ import org.junit.Test
 import uk.co.lemoncog.footballmanager.core.DataProvider
 import uk.co.lemoncog.footballmanager.core.GameReply
 import uk.co.lemoncog.footballmanager.core.GameRequestController
+import java.util.*
 
 fun createSuccessProvider(): DataProvider<GameReply> {
     return object: DataProvider<GameReply> {
         override fun get(success: (GameReply) -> Unit, failure: () -> Unit) {
-            success(GameReply(0));
+            success(GameReply(0, "test", Date()));
         }
     }
 }

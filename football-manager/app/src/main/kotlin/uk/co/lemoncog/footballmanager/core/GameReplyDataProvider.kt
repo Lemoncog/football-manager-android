@@ -9,7 +9,7 @@ class GameReplyDataProvider : DataProvider<GameReply> {
 
 
         gameModel = GameModel(1,
-                "Ross wtf with me",
+                "Ross gimme an API to call plx plx",
                 "YAY",
                 parseServerDate("2016-03-17T09:15:00.000Z"),
                 parseServerDate("2016-03-17T09:16:00.803Z"),

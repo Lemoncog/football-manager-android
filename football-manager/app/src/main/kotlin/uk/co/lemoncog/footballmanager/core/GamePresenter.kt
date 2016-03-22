@@ -1,6 +1,6 @@
 package uk.co.lemoncog.footballmanager.core
 
-import java.text.SimpleDateFormat
+import uk.co.lemoncog.footballmanager.core.util.convertGameModelToViewModel
 
 class GamePresenter(val view: StatefulView<GameViewModel>, val dataProvider: DataProvider<GameModel>) {
     val actionListeners = mutableListOf<ActionListener>();
@@ -14,10 +14,7 @@ class GamePresenter(val view: StatefulView<GameViewModel>, val dataProvider: Dat
     }
 
     private fun gameModelTogameViewModel(gameModel: GameModel) : GameViewModel {
-        val sdf = SimpleDateFormat("EEE, d MMM yyyy, hh:mm aaa");
-        val prettyDate = sdf.format(gameModel.date);
-
-        return GameViewModel(gameModel.name, gameModel.description, prettyDate, gameModel.replies.count());
+       return convertGameModelToViewModel(gameModel);
     }
 
     fun onAcceptClicked() {
