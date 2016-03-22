@@ -126,6 +126,7 @@ class GameListViewController : StatefulView<GameListViewModel>, GameListClickedL
         Log.v("GameListViewController", "gameViewClicked: $position")
 
         gameRequestController.requestToPlay({
+            gameListPresenter.refresh();
         }, {
         });
     }
