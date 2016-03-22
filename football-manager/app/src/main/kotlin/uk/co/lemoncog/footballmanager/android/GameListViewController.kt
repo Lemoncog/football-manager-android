@@ -2,6 +2,7 @@ package uk.co.lemoncog.footballmanager.android
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -122,7 +123,7 @@ class GameListViewController : StatefulView<GameListViewModel>, GameListClickedL
 
     override fun gameViewClicked(position: Int, gameViewModel: GameViewModel) {
 
-        print("gameViewClicked: $position")
+        Log.v("GameListViewController", "gameViewClicked: $position")
 
         gameRequestController.requestToPlay({
         }, {
