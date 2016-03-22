@@ -13,9 +13,11 @@ class TestDataProvider() : DataProvider<GameModel> {
 }
 
 class GamePresenterTest : StatefulView<GameViewModel>, ActionListener {
-
     var showCalled: Boolean = false;
     var onTriggered: Boolean = false;
+
+    override fun setAcceptClickedListener(clicked: () -> Unit) {
+    }
 
     override fun onTrigger() {
         onTriggered = true;

@@ -8,13 +8,10 @@ class GamePresenter(val view: StatefulView<GameViewModel>, val dataProvider: Dat
     }
 
     fun onReady() {
-        var success = { gameModel: GameModel ->  view.show(gameModelTogameViewModel(gameModel)) }
-        var failure = {};
-
-        dataProvider.get(success, failure);
+        refresh();
     }
 
-    fun gameModelTogameViewModel(gameModel: GameModel) : GameViewModel {
+    private fun gameModelTogameViewModel(gameModel: GameModel) : GameViewModel {
         return GameViewModel("Sam");
     }
 
@@ -22,5 +19,12 @@ class GamePresenter(val view: StatefulView<GameViewModel>, val dataProvider: Dat
         for (listener in actionListeners) {
             listener.onTrigger();
         }
+    }
+
+    fun refresh() {
+        var success = { gameModel: GameModel ->  view.show(gameModelTogameViewModel(gameModel)) }
+        var failure = {};
+
+        dataProvider.get(success, failure);
     }
 }
