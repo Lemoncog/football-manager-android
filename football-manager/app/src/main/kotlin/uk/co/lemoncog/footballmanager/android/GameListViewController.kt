@@ -19,13 +19,14 @@ class GameListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 }
 
-class GameListAdapter(val gameListClickedListener: GameListClickedListener) : RecyclerView.Adapter<GameListViewHolder>() {
+class GameListAdapter() : RecyclerView.Adapter<GameListViewHolder>() {
     var data : Array<GameViewModel> = emptyArray();
+    var gameListClickedListener: GameListClickedListener? = null;
 
 
     override fun onBindViewHolder(holder: GameListViewHolder?, position: Int) {
         holder!!.gameView.show(data[position])
-        holder!!.gameView.setAcceptClickedListener { gameListClickedListener.gameViewClicked(position, data[position]) }
+        holder!!.gameView.setAcceptClickedListener { gameListClickedListener?.gameViewClicked(position, data[position]) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): GameListViewHolder? {
@@ -78,7 +79,16 @@ class GameListModelDataProvider : DataProvider<GameListModel> {
     }
 }
 
-class GameListViewController : StatefulView<GameListViewModel>, GameListClickedListener {
+class GameListViewController(val recyclerView: RecyclerView, val adapter: GameListAdapter, val layoutManager: LinearLayoutManager) : StatefulView<GameListViewModel>, GameListClickedListener {
+    val gameListPresenter : GameListPresenter = GameListPresenter(this, GameListModelDataProvider());
+    val gameRequestController = GameRequestController(GameReplyDataProvider());
+
+    init {
+        adapter.gameListClickedListener = this;
+        recyclerView.layoutManager = layoutManager;
+        recyclerView.adapter = adapter;
+    }
+
     override fun setAcceptClickedListener(clicked: () -> Unit) {
         throw UnsupportedOperationException()
     }
@@ -87,28 +97,6 @@ class GameListViewController : StatefulView<GameListViewModel>, GameListClickedL
         adapter.data = viewData.games;
         adapter.notifyDataSetChanged();
     }
-
-    lateinit var recyclerView: RecyclerView;
-    lateinit var layoutManager: RecyclerView.LayoutManager;
-    lateinit var adapter : GameListAdapter;
-    lateinit var gameListPresenter : GameListPresenter;
-
-    val gameRequestController = GameRequestController(GameReplyDataProvider());
-
-    fun attachView(viewGroup: ViewGroup) {
-        recyclerView = viewGroup.findViewById(R.id.recycler_view) as RecyclerView;
-
-        adapter = GameListAdapter(this);
-
-        layoutManager = LinearLayoutManager(viewGroup.context);
-        recyclerView.layoutManager = layoutManager;
-        recyclerView.adapter = adapter;
-
-        gameListPresenter = GameListPresenter(this, GameListModelDataProvider())
-    }
-
-    fun detachView() {
-     }
 
     fun onResume() {
         gameListPresenter.onReady();
