@@ -25,7 +25,7 @@ class GameListFragment : Fragment(){
         val layoutManager = LinearLayoutManager(context);
 
         //Look at this NPE waiting to happen!
-        MainActivity.UserLoginProvider().get( { authenticatedUser: AuthenticatedUser ->
+        UserLoginProvider().get( { authenticatedUser: AuthenticatedUser ->
             gameViewController = GameListViewController(authenticatedUser, recyclerView, adapter, layoutManager)
         }, {})
 

@@ -22,5 +22,5 @@ data class AuthenticatedUser(val token: String);
 
 
 //UI Models
-data class GameViewModel(val name: String, val description: String, val dateWhen: String, val userInGame: Boolean, val replyCount: Int);
+data class GameViewModel(val id: Long, val name: String, val description: String, val dateWhen: String, val userInGame: Boolean, val replyCount: Int);
 data class GameListViewModel(val games: Array<GameViewModel>);

@@ -10,11 +10,6 @@ import uk.co.lemoncog.footballmanager.core.GameLoginController
 import uk.co.lemoncog.footballmanager.core.GameLoginNavigation
 
 class MainActivity : AppCompatActivity(), GameLoginNavigation {
-    class UserLoginProvider : DataProvider<AuthenticatedUser> {
-        override fun get(success: (AuthenticatedUser) -> Unit, failure: () -> Unit) {
-            success(AuthenticatedUser("e3409875d642bcab5afc8d3695644938"))
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

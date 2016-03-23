@@ -16,11 +16,11 @@ import java.util.*
    fun convertSingleGameModelToViewModel(gameModel: GameListSingleModel) : GameViewModel {
        val sdf = SimpleDateFormat("EEE, d MMM yyyy, hh:mm aaa");
        val prettyDate = sdf.format(gameModel.date);
-       return GameViewModel(gameModel.name, gameModel.description, prettyDate, false, gameModel.replies_count);
+       return GameViewModel(gameModel.id, gameModel.name, gameModel.description, prettyDate, false, gameModel.replies_count);
    }
 
     fun convertGameModelToViewModel(gameModel: GameModel) : GameViewModel {
         val sdf = SimpleDateFormat("EEE, d MMM yyyy, hh:mm aaa");
         val prettyDate = sdf.format(gameModel.date);
-        return GameViewModel(gameModel.name, gameModel.description, prettyDate, false, gameModel.replies.count());
+        return GameViewModel(gameModel.id, gameModel.name, gameModel.description, prettyDate, false, gameModel.replies.count());
     }
