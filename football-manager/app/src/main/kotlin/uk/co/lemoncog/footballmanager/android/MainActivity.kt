@@ -17,7 +17,9 @@ class MainActivity : AppCompatActivity(), GameLoginNavigation {
 
         val gameLoginController = GameLoginController(UserLoginProvider(), this);
 
-        gameLoginController.onReady();
+        if(savedInstanceState == null) {
+            gameLoginController.onReady();
+        }
     }
 
     override fun navigateToGameScreen() {

@@ -8,8 +8,17 @@ import android.view.ViewGroup
 import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.core.AuthenticatedUser
 
-class GameFragment : Fragment() {
 
+fun createFragment(gameID: Long) : Fragment {
+    val gameFragment = GameFragment();
+    val gameArguments = Bundle();
+    gameArguments.putLong("BUNDLE_KEY_GAME_ID", gameID);
+    gameFragment.arguments = gameArguments;
+
+    return gameFragment;
+}
+
+class GameFragment : Fragment() {
     lateinit var gameViewController : GameViewController;
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

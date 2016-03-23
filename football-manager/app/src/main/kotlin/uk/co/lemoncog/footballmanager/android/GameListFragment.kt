@@ -13,7 +13,7 @@ import uk.co.lemoncog.footballmanager.core.GameListViewModel
 import uk.co.lemoncog.footballmanager.core.GameViewModel
 import uk.co.lemoncog.footballmanager.core.StatefulView
 
-class GameListFragment : Fragment(){
+class GameListFragment : Fragment() {
 
     lateinit var gameViewController : GameListViewController;
 
@@ -26,7 +26,7 @@ class GameListFragment : Fragment(){
 
         //Look at this NPE waiting to happen!
         UserLoginProvider().get( { authenticatedUser: AuthenticatedUser ->
-            gameViewController = GameListViewController(authenticatedUser, recyclerView, adapter, layoutManager)
+            gameViewController = GameListViewController(authenticatedUser, fragmentManager, recyclerView, adapter, layoutManager)
         }, {})
 
         return view;
