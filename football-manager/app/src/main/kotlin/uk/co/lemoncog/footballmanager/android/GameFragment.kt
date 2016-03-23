@@ -27,7 +27,7 @@ class GameFragment : Fragment() {
         var gameId = arguments.getLong("BUNDLE_KEY_GAME_ID");
 
         UserLoginProvider().get( { authenticatedUser: AuthenticatedUser ->
-            gameViewController = GameViewController(gameId);
+            gameViewController = GameViewController(gameId, authenticatedUser);
         }, {})
         gameViewController.attachView(view!!.findViewById(R.id.latest_game_view) as ViewGroup);
 

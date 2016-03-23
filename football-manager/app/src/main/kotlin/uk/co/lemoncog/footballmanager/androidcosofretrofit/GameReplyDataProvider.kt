@@ -1,4 +1,4 @@
-package uk.co.lemoncog.footballmanager.core
+package uk.co.lemoncog.footballmanager.androidcosofretrofit
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -6,6 +6,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uk.co.lemoncog.footballmanager.android.services.GameService
+import uk.co.lemoncog.footballmanager.core.AuthenticatedUser
+import uk.co.lemoncog.footballmanager.core.DataProvider
+import uk.co.lemoncog.footballmanager.core.GameReply
 
 
 class GameReplyDataProvider(val id: Long, val authenticatedUser: AuthenticatedUser) : DataProvider<GameReply> {

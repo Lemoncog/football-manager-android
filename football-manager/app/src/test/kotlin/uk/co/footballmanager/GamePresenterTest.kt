@@ -3,6 +3,8 @@ package uk.co.lemoncog.footballmanager
 import org.junit.Test
 
 import org.junit.Assert.*
+import uk.co.lemoncog.footballmanager.androidcosofretrofit.firstGameReply
+import uk.co.lemoncog.footballmanager.androidcosofretrofit.secondGameReply
 import uk.co.lemoncog.footballmanager.core.*
 import java.util.*
 
