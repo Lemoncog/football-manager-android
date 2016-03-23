@@ -6,11 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.core.*
 import uk.co.lemoncog.footballmanager.core.util.convertGameModelToViewModel
-import java.text.SimpleDateFormat
 
 interface GameListClickedListener {
     fun gameViewClicked(position: Int, gameViewModel: GameViewModel);

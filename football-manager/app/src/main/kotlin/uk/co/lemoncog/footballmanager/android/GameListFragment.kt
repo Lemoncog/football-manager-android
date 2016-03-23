@@ -9,6 +9,10 @@ import uk.co.lemoncog.footballmanager.R
 
 class GameListFragment : Fragment() {
 
+    class GameListController() {
+
+    }
+
     var gameViewController : GameListViewController = GameListViewController();
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

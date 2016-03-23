@@ -16,6 +16,7 @@ import java.util.*
    fun convertGameModelToViewModel(gameModel: GameModel) : GameViewModel {
        val sdf = SimpleDateFormat("EEE, d MMM yyyy, hh:mm aaa");
        val prettyDate = sdf.format(gameModel.date);
+       val userInGame = gameModel.replies.filter { it.name == "lemoncog@gmail.com" }.count() > 0;
 
-       return GameViewModel(gameModel.name, gameModel.description, prettyDate, gameModel.replies.count());
+       return GameViewModel(gameModel.name, gameModel.description, prettyDate, userInGame, gameModel.replies.count());
    }
