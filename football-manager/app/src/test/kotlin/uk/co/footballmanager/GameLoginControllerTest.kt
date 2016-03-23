@@ -23,7 +23,7 @@ class GameLoginControllerTest : GameLoginNavigation {
 
     class GameLoginController(val userProvider: DataProvider<AuthenticatedUser>, val gameLoginNavigation: GameLoginNavigation) {
         fun onReady() {
-
+            userProvider.get({ gameLoginNavigation.navigateToGameScreen() }, {})
         }
     }
 
@@ -34,7 +34,7 @@ class GameLoginControllerTest : GameLoginNavigation {
             }
         }
     }
-    
+
     @Test
     fun givenUserAlreadyHasAccount_NavigateToGameScreen() {
         val gameLoginController = GameLoginController(createSuccessfulLoginProvider(), this)
