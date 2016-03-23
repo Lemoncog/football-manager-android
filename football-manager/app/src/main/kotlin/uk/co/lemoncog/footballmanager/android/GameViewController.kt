@@ -25,7 +25,7 @@ class GameViewController(val gameId: Long, val authenticatedUser: AuthenticatedU
     private fun userIsAllowedToPlay() {
         gamePresenter.refresh();
     }
-
+    
     fun onResume() {
         gamePresenter.onReady();
     }
