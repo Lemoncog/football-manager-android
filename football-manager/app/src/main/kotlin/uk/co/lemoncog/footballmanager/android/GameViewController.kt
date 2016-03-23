@@ -3,20 +3,20 @@ package uk.co.lemoncog.footballmanager.android
 import android.view.ViewGroup
 import uk.co.lemoncog.footballmanager.core.*
 
-class GameViewController() {
+class GameViewController(val gameId: Long) {
     lateinit var gamePresenter: GamePresenter;
-    val gameRequestController = null;//GameRequestController(GameReplyDataProvider(1, authenticatedUser));
+    val gameRequestController = GameRequestController(UserLoginProvider());
 
     fun attachView(viewGroup: ViewGroup) {
         gamePresenter = GamePresenter(GameView(viewGroup), GameModelDataProvider());
 
         gamePresenter.actionListeners.add(object: ActionListener {
             override fun onTrigger() {
-//                gameRequestController.requestToPlay({
-//                    userIsAllowedToPlay();
-//                }, {
-//                    userIsNotAllowedToPlay();
-//                });
+                gameRequestController.requestToPlay(gameId, {
+                    userIsAllowedToPlay();
+                }, {
+                    userIsNotAllowedToPlay();
+                });
             }
         })
     }

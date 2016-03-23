@@ -13,7 +13,8 @@ class GameListAdapter() : RecyclerView.Adapter<GameListViewHolder>() {
 
     override fun onBindViewHolder(holder: GameListViewHolder?, position: Int) {
         holder!!.gameView.show(data[position])
-        holder!!.gameView.setAcceptClickedListener { gameListClickedListener?.gameViewClicked(position, data[position]) }
+        holder!!.gameView.setAcceptClickedListener { gameListClickedListener?.acceptClicked(position, data[position]) }
+        holder!!.gameView.setViewClickedListener { gameListClickedListener?.gameViewClicked(position, data[position]) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): GameListViewHolder? {

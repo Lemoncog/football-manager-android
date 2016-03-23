@@ -8,6 +8,7 @@ import uk.co.lemoncog.footballmanager.core.*
 
 interface GameListClickedListener {
     fun gameViewClicked(position: Int, gameViewModel: GameViewModel);
+    fun acceptClicked(position: Int, gameViewModel: GameViewModel)
 }
 
 class GameListViewController(val authenticatedUser: AuthenticatedUser, val recyclerView: RecyclerView, val adapter: GameListAdapter, val layoutManager: LinearLayoutManager) : StatefulView<GameListViewModel>, GameListClickedListener {
@@ -18,6 +19,10 @@ class GameListViewController(val authenticatedUser: AuthenticatedUser, val recyc
         adapter.gameListClickedListener = this;
         recyclerView.layoutManager = layoutManager;
         recyclerView.adapter = adapter;
+    }
+
+    override fun setViewClickedListener(clicked: () -> Unit) {
+        throw UnsupportedOperationException()
     }
 
     override fun setAcceptClickedListener(clicked: () -> Unit) {
@@ -37,7 +42,10 @@ class GameListViewController(val authenticatedUser: AuthenticatedUser, val recyc
     }
 
     override fun gameViewClicked(position: Int, gameViewModel: GameViewModel) {
+        Log.v("GameListViewController", "Had I implemented it, this would take you to the next screen");
+    }
 
+    override fun acceptClicked(position: Int, gameViewModel: GameViewModel) {
         Log.v("GameListViewController", "gameViewClicked: $position")
 
         gameRequestController.requestToPlay(gameViewModel.id,{
