@@ -2,11 +2,11 @@ package uk.co.footballmanager
 
 import org.junit.Test
 import org.junit.Assert.*
+import uk.co.lemoncog.footballmanager.core.AuthenticatedUser
 import uk.co.lemoncog.footballmanager.core.DataProvider
+import uk.co.lemoncog.footballmanager.core.GameLoginController
+import uk.co.lemoncog.footballmanager.core.GameLoginNavigation
 
-interface GameLoginNavigation {
-    fun navigateToGameScreen();
-}
 
 class GameLoginControllerTest : GameLoginNavigation {
 
@@ -14,17 +14,6 @@ class GameLoginControllerTest : GameLoginNavigation {
 
     override fun navigateToGameScreen() {
         navigatedToGameScreen = true;
-    }
-
-    //testfootballaccount@test.com
-    //test12345
-    data class User(val userName: String,val password: String);
-    data class AuthenticatedUser(val token: String);
-
-    class GameLoginController(val userProvider: DataProvider<AuthenticatedUser>, val gameLoginNavigation: GameLoginNavigation) {
-        fun onReady() {
-            userProvider.get({ gameLoginNavigation.navigateToGameScreen() }, {})
-        }
     }
 
     fun createSuccessfulLoginProvider(): DataProvider<AuthenticatedUser> {

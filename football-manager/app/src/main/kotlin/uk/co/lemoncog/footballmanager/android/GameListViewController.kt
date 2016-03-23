@@ -6,9 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import okhttp3.Interceptor
+import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Header
 import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.core.*
-import uk.co.lemoncog.footballmanager.core.util.convertGameModelToViewModel
+import uk.co.lemoncog.footballmanager.core.util.convertSingleGameModelToViewModel
+import uk.co.lemoncog.footballmanager.core.util.parseServerDate
 
 interface GameListClickedListener {
     fun gameViewClicked(position: Int, gameViewModel: GameViewModel);
@@ -50,8 +56,8 @@ class GameListPresenter(val view: StatefulView<GameListViewModel>, val dataProvi
 
         val games = mutableListOf<GameViewModel>();
 
-        for(gameModel: GameModel in gameListModel.games) {
-            games.add(convertGameModelToViewModel(gameModel));
+        for(gameModel: GameListSingleModel in gameListModel.games) {
+            games.add(convertSingleGameModelToViewModel(gameModel));
         }
 
         return GameListViewModel(games.toTypedArray());
@@ -65,22 +71,40 @@ class GameListPresenter(val view: StatefulView<GameListViewModel>, val dataProvi
     }
 }
 
-class GameListModelDataProvider : DataProvider<GameListModel> {
+interface GameService {
+    @GET("games.json")
+    fun listGames(@Header("X-API-TOKEN") token: String) : Call<List<ServerGameListSingleModel>>;
+}
+
+class GameListModelDataProvider(val authenticatedUser: AuthenticatedUser) : DataProvider<GameListModel> {
     override fun get(success: (GameListModel) -> Unit, failure: () -> Unit) {
-        val dummyList = mutableListOf<GameModel>();
+        val retrofit = Retrofit.Builder().baseUrl("https://footballmanagerapp.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        val call = retrofit.create<GameService>(GameService::class.java).listGames(authenticatedUser.token);
 
-        GameModelDataProvider().get({ gameModel : GameModel -> dummyList.add(gameModel);
-            GameModelDataProvider().get({ gameModel : GameModel -> dummyList.add(gameModel);
-                GameModelDataProvider().get({ gameModel: GameModel -> dummyList.add(gameModel)
+        call.enqueue(object: Callback<List<ServerGameListSingleModel>> {
+            override fun onResponse(call: Call<List<ServerGameListSingleModel>>, response: Response<List<ServerGameListSingleModel>>) {
 
-                    success(GameListModel(dummyList.toTypedArray()));
-                }, {});
-            }, {}) }, {});
+                //Got a separation from Server to our Domain, server can change and the effect is handled here.
+                val body = response.body();
+                val gameList = mutableListOf<GameListSingleModel>();
+                for(serverGame in body) {
+                    gameList.add(GameListSingleModel(serverGame.id, serverGame.name, serverGame.description, parseServerDate(serverGame.date), parseServerDate(serverGame.created_at), parseServerDate(serverGame.updated_at), serverGame.replies_count));
+                }
+                success(GameListModel(gameList.toTypedArray()));
+            }
+
+            override fun onFailure(call: Call<List<ServerGameListSingleModel>>, t: Throwable) {
+                throw t;
+            }
+        });
+
     }
 }
 
-class GameListViewController(val recyclerView: RecyclerView, val adapter: GameListAdapter, val layoutManager: LinearLayoutManager) : StatefulView<GameListViewModel>, GameListClickedListener {
-    val gameListPresenter : GameListPresenter = GameListPresenter(this, GameListModelDataProvider());
+class GameListViewController(val authenticatedUser: AuthenticatedUser, val recyclerView: RecyclerView, val adapter: GameListAdapter, val layoutManager: LinearLayoutManager) : StatefulView<GameListViewModel>, GameListClickedListener {
+    val gameListPresenter : GameListPresenter = GameListPresenter(this, GameListModelDataProvider(authenticatedUser));
     val gameRequestController = GameRequestController(GameReplyDataProvider());
 
     init {

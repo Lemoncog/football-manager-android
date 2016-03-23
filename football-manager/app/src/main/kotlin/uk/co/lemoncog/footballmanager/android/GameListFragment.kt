@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import uk.co.lemoncog.footballmanager.R
+import uk.co.lemoncog.footballmanager.core.AuthenticatedUser
 import uk.co.lemoncog.footballmanager.core.GameListViewModel
 import uk.co.lemoncog.footballmanager.core.GameViewModel
 import uk.co.lemoncog.footballmanager.core.StatefulView
@@ -23,7 +24,10 @@ class GameListFragment : Fragment(){
         val adapter = GameListAdapter();
         val layoutManager = LinearLayoutManager(context);
 
-        gameViewController = GameListViewController(recyclerView, adapter, layoutManager)
+        //Look at this NPE waiting to happen!
+        MainActivity.UserLoginProvider().get( { authenticatedUser: AuthenticatedUser ->
+            gameViewController = GameListViewController(authenticatedUser, recyclerView, adapter, layoutManager)
+        }, {})
 
         return view;
     }
