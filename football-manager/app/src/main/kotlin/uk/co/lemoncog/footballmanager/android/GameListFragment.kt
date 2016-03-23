@@ -9,9 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.core.AuthenticatedUser
-import uk.co.lemoncog.footballmanager.core.GameListViewModel
-import uk.co.lemoncog.footballmanager.core.GameViewModel
-import uk.co.lemoncog.footballmanager.core.StatefulView
 
 class GameListFragment : Fragment() {
 

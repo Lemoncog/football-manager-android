@@ -6,7 +6,7 @@ import uk.co.lemoncog.footballmanager.core.*
 
 class GameViewController(val gameId: Long, val authenticatedUser: AuthenticatedUser) {
     lateinit var gamePresenter: GamePresenter;
-    val gameRequestController = GameRequestController(UserLoginProvider());
+    val gameRequestController = GameRequestController(authenticatedUser);
 
     fun attachView(viewGroup: ViewGroup) {
         gamePresenter = GamePresenter(GameView(viewGroup), GameModelDataProvider(gameId, authenticatedUser));
