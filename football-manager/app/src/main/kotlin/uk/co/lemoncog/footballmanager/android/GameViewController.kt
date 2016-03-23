@@ -4,13 +4,9 @@ import android.view.ViewGroup
 import uk.co.lemoncog.footballmanager.androidcosofretrofit.GameModelDataProvider
 import uk.co.lemoncog.footballmanager.core.*
 
-class GameViewController(val gameId: Long, val authenticatedUser: AuthenticatedUser) {
-    lateinit var gamePresenter: GamePresenter;
+class GameViewController(val gameId: Long, val authenticatedUser: AuthenticatedUser, val gamePresenter: GamePresenter) {
     val gameRequestController = GameRequestController(authenticatedUser);
-
-    fun attachView(viewGroup: ViewGroup) {
-        gamePresenter = GamePresenter(GameView(viewGroup), GameModelDataProvider(gameId, authenticatedUser));
-
+    init {
         gamePresenter.actionListeners.add(object: ActionListener {
             override fun onTrigger() {
                 gameRequestController.requestToPlay(gameId, {
@@ -28,9 +24,6 @@ class GameViewController(val gameId: Long, val authenticatedUser: AuthenticatedU
 
     private fun userIsAllowedToPlay() {
         gamePresenter.refresh();
-    }
-
-    fun detachView() {
     }
 
     fun onResume() {
