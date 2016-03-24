@@ -1,8 +1,6 @@
 package uk.co.lemoncog.footballmanager.core
 
-interface StatefulView<T> {
+interface StatefulView<T> : ShowableDataView<T> {
     fun setAcceptClickedListener(clicked : () -> Unit);
     fun setViewClickedListener(clicked: () -> Unit)
-
-    fun show(viewData: T);
 }

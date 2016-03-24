@@ -13,7 +13,7 @@ interface GameListClickedListener {
     fun acceptClicked(position: Int, gameViewModel: GameViewModel)
 }
 
-class GameListViewController(val authenticatedUser: AuthenticatedUser, val fragmentManager: FragmentManager, val recyclerView: RecyclerView, val adapter: GameListAdapter, val layoutManager: LinearLayoutManager) : StatefulView<GameListViewModel>, GameListClickedListener {
+class GameListViewController(val authenticatedUser: AuthenticatedUser, val fragmentManager: FragmentManager, val recyclerView: RecyclerView, val adapter: GameListAdapter, val layoutManager: LinearLayoutManager) : ShowableDataView<GameListViewModel>, GameListClickedListener {
     val gameListPresenter : GameListPresenter = GameListPresenter(this, GameListModelDataProvider(authenticatedUser));
     val gameRequestController = GameRequestController(authenticatedUser);
 
@@ -21,14 +21,6 @@ class GameListViewController(val authenticatedUser: AuthenticatedUser, val fragm
         adapter.gameListClickedListener = this;
         recyclerView.layoutManager = layoutManager;
         recyclerView.adapter = adapter;
-    }
-
-    override fun setViewClickedListener(clicked: () -> Unit) {
-        throw UnsupportedOperationException()
-    }
-
-    override fun setAcceptClickedListener(clicked: () -> Unit) {
-        throw UnsupportedOperationException()
     }
 
     override fun show(viewData: GameListViewModel) {
@@ -44,13 +36,10 @@ class GameListViewController(val authenticatedUser: AuthenticatedUser, val fragm
     }
 
     override fun gameViewClicked(position: Int, gameViewModel: GameViewModel) {
-        Log.v("GameListViewController", "Had I implemented it, this would take you to the next screen");
         fragmentManager.beginTransaction().addToBackStack("to_game_view").replace(R.id.fragment_container, createFragment(gameViewModel.id)).commit();
     }
 
     override fun acceptClicked(position: Int, gameViewModel: GameViewModel) {
-        Log.v("GameListViewController", "gameViewClicked: $position")
-
         gameRequestController.requestToPlay(gameViewModel.id,{
             gameListPresenter.refresh();
         }, {

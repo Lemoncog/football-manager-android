@@ -3,7 +3,7 @@ package uk.co.lemoncog.footballmanager.android
 import uk.co.lemoncog.footballmanager.core.*
 import uk.co.lemoncog.footballmanager.core.util.convertSingleGameModelToViewModel
 
-class GameListPresenter(val view: StatefulView<GameListViewModel>, val dataProvider: DataProvider<GameListModel>) {
+class GameListPresenter(val view: ShowableDataView<GameListViewModel>, val dataProvider: DataProvider<GameListModel>) {
 
     fun onReady() {
         refresh();
