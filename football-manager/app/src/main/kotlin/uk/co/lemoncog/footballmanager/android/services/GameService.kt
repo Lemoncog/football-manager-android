@@ -16,6 +16,6 @@ interface GameService {
     fun game(@Header("X-API-TOKEN") token: String, @Path("id") id: String) : Call<ServerGameModel>
 
    // http://localhost:3000/games/1/reply
-    @POST("games/{id}/reply")
+    @POST("games/{id}/reply.json")
     fun reply(@Header("X-API-TOKEN") token: String, @Path("id") id: String) : Call<Unit>;
 }

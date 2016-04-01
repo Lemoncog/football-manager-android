@@ -1,10 +1,11 @@
-package uk.co.lemoncog.footballmanager.android
+package uk.co.lemoncog.footballmanager.android.list
 
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import uk.co.lemoncog.footballmanager.R
+import uk.co.lemoncog.footballmanager.android.detail.createFragment
 import uk.co.lemoncog.footballmanager.androidcosofretrofit.GameListModelDataProvider
 import uk.co.lemoncog.footballmanager.core.*
 

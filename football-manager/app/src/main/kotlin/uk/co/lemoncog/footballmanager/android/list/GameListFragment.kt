@@ -1,4 +1,4 @@
-package uk.co.lemoncog.footballmanager.android
+package uk.co.lemoncog.footballmanager.android.list
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import uk.co.lemoncog.footballmanager.R
+import uk.co.lemoncog.footballmanager.android.UserLoginProvider
 import uk.co.lemoncog.footballmanager.core.AuthenticatedUser
 
 class GameListFragment : Fragment() {

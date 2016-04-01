@@ -1,4 +1,4 @@
-package uk.co.lemoncog.footballmanager.android
+package uk.co.lemoncog.footballmanager.android.detail
 
 import android.view.View
 import android.view.ViewGroup

@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import uk.co.lemoncog.footballmanager.R
+import uk.co.lemoncog.footballmanager.android.list.GameListFragment
 import uk.co.lemoncog.footballmanager.core.AuthenticatedUser
 import uk.co.lemoncog.footballmanager.core.DataProvider
 import uk.co.lemoncog.footballmanager.core.GameLoginController

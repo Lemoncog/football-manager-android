@@ -1,4 +1,4 @@
-package uk.co.lemoncog.footballmanager.android
+package uk.co.lemoncog.footballmanager.android.detail
 
 import android.view.ViewGroup
 import uk.co.lemoncog.footballmanager.androidcosofretrofit.GameModelDataProvider

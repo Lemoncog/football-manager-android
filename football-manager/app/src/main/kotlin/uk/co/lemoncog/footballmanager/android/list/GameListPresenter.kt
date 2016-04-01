@@ -1,4 +1,4 @@
-package uk.co.lemoncog.footballmanager.android
+package uk.co.lemoncog.footballmanager.android.list
 
 import uk.co.lemoncog.footballmanager.core.*
 import uk.co.lemoncog.footballmanager.core.util.convertSingleGameModelToViewModel
