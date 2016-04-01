@@ -16,19 +16,25 @@ class GameListModelDataProvider(val authenticatedUser: AuthenticatedUser) : Data
                 .build();
         val call = retrofit.create<GameService>(GameService::class.java).listGames(authenticatedUser.token);
 
-        call.enqueue(object: Callback<List<ServerGameListSingleModel>> {
-            override fun onResponse(call: Call<List<ServerGameListSingleModel>>, response: Response<List<ServerGameListSingleModel>>) {
+        call.enqueue(object: Callback<List<ServerGameModel>> {
+            override fun onResponse(call: Call<List<ServerGameModel>>, response: Response<List<ServerGameModel>>) {
 
                 //Got a separation from Server to our Domain, server can change and the effect is handled here.
                 val body = response.body();
-                val gameList = mutableListOf<GameListSingleModel>();
+                val gameList = mutableListOf<GameModel>();
                 for(serverGame in body) {
-                    gameList.add(GameListSingleModel(serverGame.id, serverGame.name, serverGame.description, parseServerDate(serverGame.date), parseServerDate(serverGame.created_at), parseServerDate(serverGame.updated_at), serverGame.replies_count));
+
+                    val replies = mutableListOf<GameReply>()
+                    for(reply in serverGame.replies) {
+                        replies.add(GameReply(reply.id, reply.user, parseServerDate(reply.created_at)));
+                    }
+
+                    gameList.add(GameModel(serverGame.id, serverGame.name, serverGame.description, parseServerDate(serverGame.date), parseServerDate(serverGame.created_at), parseServerDate(serverGame.updated_at), replies.toTypedArray()));
                 }
                 success(GameListModel(gameList.toTypedArray()));
             }
 
-            override fun onFailure(call: Call<List<ServerGameListSingleModel>>, t: Throwable) {
+            override fun onFailure(call: Call<List<ServerGameModel>>, t: Throwable) {
                 throw t;
             }
         });

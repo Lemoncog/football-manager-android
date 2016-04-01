@@ -1,7 +1,5 @@
 package uk.co.lemoncog.footballmanager.core.util
 
-
-import uk.co.lemoncog.footballmanager.core.GameListSingleModel
 import uk.co.lemoncog.footballmanager.core.GameModel
 import uk.co.lemoncog.footballmanager.core.GameViewModel
 import java.text.SimpleDateFormat
@@ -13,10 +11,10 @@ import java.util.*
        return dateFormat.parse(stringDate);
    }
 
-   fun convertSingleGameModelToViewModel(gameModel: GameListSingleModel) : GameViewModel {
+   fun convertSingleGameModelToViewModel(gameModel: GameModel) : GameViewModel {
        val sdf = SimpleDateFormat("EEE, d MMM yyyy, hh:mm aaa");
        val prettyDate = sdf.format(gameModel.date);
-       return GameViewModel(gameModel.id, gameModel.name, gameModel.description, prettyDate, false, gameModel.replies_count);
+       return GameViewModel(gameModel.id, gameModel.name, gameModel.description, prettyDate, false, gameModel.replies.count());
    }
 
     fun convertGameModelToViewModel(gameModel: GameModel) : GameViewModel {

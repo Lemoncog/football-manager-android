@@ -13,7 +13,7 @@ class GameListPresenter(val view: ShowableDataView<GameListViewModel>, val dataP
 
         val games = mutableListOf<GameViewModel>();
 
-        for(gameModel: GameListSingleModel in gameListModel.games) {
+        for(gameModel: GameModel in gameListModel.games) {
             games.add(convertSingleGameModelToViewModel(gameModel));
         }
 

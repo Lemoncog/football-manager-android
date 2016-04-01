@@ -24,7 +24,7 @@ class GameListFragment : Fragment() {
 
         //Look at this NPE waiting to happen!
         UserLoginProvider().get( { authenticatedUser: AuthenticatedUser ->
-            gameViewController = GameListViewController(authenticatedUser, fragmentManager, recyclerView, adapter, layoutManager)
+            gameViewController = GameListViewController(authenticatedUser, context, fragmentManager, recyclerView, adapter, layoutManager)
         }, {})
 
         return view;

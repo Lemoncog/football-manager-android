@@ -1,9 +1,11 @@
 package uk.co.lemoncog.footballmanager.android.list
 
+import android.content.Context
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.widget.Toast
 import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.android.detail.createFragment
 import uk.co.lemoncog.footballmanager.androidcosofretrofit.GameListModelDataProvider
@@ -14,7 +16,7 @@ interface GameListClickedListener {
     fun acceptClicked(position: Int, gameViewModel: GameViewModel)
 }
 
-class GameListViewController(val authenticatedUser: AuthenticatedUser, val fragmentManager: FragmentManager, val recyclerView: RecyclerView, val adapter: GameListAdapter, val layoutManager: LinearLayoutManager) : ShowableDataView<GameListViewModel>, GameListClickedListener {
+class GameListViewController(val authenticatedUser: AuthenticatedUser, val context: Context, val fragmentManager: FragmentManager, val recyclerView: RecyclerView, val adapter: GameListAdapter, val layoutManager: LinearLayoutManager) : ShowableDataView<GameListViewModel>, GameListClickedListener {
     val gameListPresenter : GameListPresenter = GameListPresenter(this, GameListModelDataProvider(authenticatedUser));
     val gameRequestController = GameRequestController(authenticatedUser);
 
@@ -41,8 +43,10 @@ class GameListViewController(val authenticatedUser: AuthenticatedUser, val fragm
     }
 
     override fun acceptClicked(position: Int, gameViewModel: GameViewModel) {
-        gameRequestController.requestToPlay(gameViewModel.id,{
-            gameListPresenter.refresh();
+        gameRequestController.requestToPlay(gameViewModel.id, {
+            gameRequestReply : GameRequestReply ->
+                Toast.makeText(context, gameRequestReply.status, Toast.LENGTH_SHORT).show();
+                gameListPresenter.refresh();
         }, {
         });
     }
