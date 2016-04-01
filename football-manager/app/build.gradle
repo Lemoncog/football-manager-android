@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 Integer getVersionCodeFunc() {
-    if(project.hasProperty('versionCode')) {
-        return versionCode.toInteger()
-    }
+//    if(project.hasProperty('versionCode')) {
+//        return versionCode.toInteger()
+//    }
 
     return 0;
 }
@@ -14,9 +14,9 @@ task testVersions() {
 }
 
 String getVersionNameFunc() {
-    if(project.hasProperty('versionName')) {
-        return versionName
-    }
+//    if(project.hasProperty('versionName')) {
+//        return versionName
+//    }
 
     return "1.2.3"
 }
