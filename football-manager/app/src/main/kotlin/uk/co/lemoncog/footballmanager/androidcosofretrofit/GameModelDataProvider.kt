@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import uk.co.lemoncog.footballmanager.android.services.GameService
 import uk.co.lemoncog.footballmanager.core.*
 import uk.co.lemoncog.footballmanager.core.adapters.parseServerDate
+import uk.co.lemoncog.footballmanager.core.adapters.serverGameModelToGameModel
 
 val firstGameReply = GameReply(1, "ross.wilson@bbc.co.uk", parseServerDate("2016-03-21T13:10:38.996Z"));
 val secondGameReply = GameReply(2, "lemoncog@gmail.co.uk", parseServerDate("2016-03-21T13:12:09.197Z"));
@@ -30,11 +31,7 @@ class GameModelDataProvider(val id: Long, val authenticatedUser: AuthenticatedUs
         call.enqueue(object: Callback<ServerGameModel> {
             override fun onResponse(call: Call<ServerGameModel>, response: Response<ServerGameModel>) {
                 val body = response.body();
-                val replies = mutableListOf<GameReply>();
-                for(reply in body.replies) {
-                    replies.add(GameReply(reply.id, reply.user, parseServerDate(reply.created_at)));
-                }
-                success(GameModel(body.id, body.name, body.description, parseServerDate(body.date), parseServerDate(body.created_at), parseServerDate(body.updated_at), replies.toTypedArray()))
+                success(serverGameModelToGameModel(body));
             }
 
             override fun onFailure(call: Call<ServerGameModel>, t: Throwable) {
