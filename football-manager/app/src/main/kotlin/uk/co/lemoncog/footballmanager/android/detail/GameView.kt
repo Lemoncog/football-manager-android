@@ -32,9 +32,6 @@ class GameView(val root: View) : StatefulView<GameViewModel> {
         title.text = viewData.name;
         whenValue.text = viewData.dateWhen;
         repliesSoFar.text = "${  viewData.replyCount } replies so far";
-
-        if(viewData.userInGame) {
-            acceptView.isEnabled = false;
-        }
+        acceptView.isEnabled = !viewData.userInGame;
     }
 }
