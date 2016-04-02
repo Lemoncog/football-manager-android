@@ -2,7 +2,7 @@ package uk.co.footballmanager
 
 import org.junit.Assert
 import org.junit.Test
-import uk.co.lemoncog.footballmanager.core.util.parseServerDate
+import uk.co.lemoncog.footballmanager.core.adapters.parseServerDate
 import java.util.*
 
 class UtilTest {

@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uk.co.lemoncog.footballmanager.android.services.GameService
 import uk.co.lemoncog.footballmanager.core.*
-import uk.co.lemoncog.footballmanager.core.util.parseServerDate
+import uk.co.lemoncog.footballmanager.core.adapters.parseServerDate
 
 val firstGameReply = GameReply(1, "ross.wilson@bbc.co.uk", parseServerDate("2016-03-21T13:10:38.996Z"));
 val secondGameReply = GameReply(2, "lemoncog@gmail.co.uk", parseServerDate("2016-03-21T13:12:09.197Z"));

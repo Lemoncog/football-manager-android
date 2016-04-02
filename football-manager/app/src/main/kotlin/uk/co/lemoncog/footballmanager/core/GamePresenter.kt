@@ -1,6 +1,7 @@
 package uk.co.lemoncog.footballmanager.core
 
-import uk.co.lemoncog.footballmanager.core.util.convertGameModelToViewModel
+import uk.co.lemoncog.footballmanager.core.adapters.convertGameModelToViewModel
+
 
 class GamePresenter(val view: StatefulView<GameViewModel>, val dataProvider: DataProvider<GameModel>) {
     val actionListeners = mutableListOf<ActionListener>();

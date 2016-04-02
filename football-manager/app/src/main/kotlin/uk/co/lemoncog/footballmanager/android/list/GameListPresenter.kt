@@ -1,7 +1,7 @@
 package uk.co.lemoncog.footballmanager.android.list
 
 import uk.co.lemoncog.footballmanager.core.*
-import uk.co.lemoncog.footballmanager.core.util.convertSingleGameModelToViewModel
+import uk.co.lemoncog.footballmanager.core.adapters.convertSingleGameModelToViewModel
 
 class GameListPresenter(val view: ShowableDataView<GameListViewModel>, val dataProvider: DataProvider<GameListModel>) {
 
