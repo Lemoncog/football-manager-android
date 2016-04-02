@@ -1,3 +1,5 @@
 #!/bin/sh
+echo 'versionCode:'$1
+echo 'versionName:'$2
 cd football-manager
-./gradlew -PversionCode=$TRAVIS_BUILD_NUMBER -PversionName=0.0.$TRAVIS_BUILD_NUMBER testVersions build
+./gradlew -PversionCode=$1 -PversionName=$2 testVersions build
