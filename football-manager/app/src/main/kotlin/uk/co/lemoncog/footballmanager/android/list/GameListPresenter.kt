@@ -1,9 +1,9 @@
 package uk.co.lemoncog.footballmanager.android.list
 
 import uk.co.lemoncog.footballmanager.core.*
-import uk.co.lemoncog.footballmanager.core.adapters.convertSingleGameModelToViewModel
+import uk.co.lemoncog.footballmanager.core.adapters.convertGameModelToViewModel
 
-class GameListPresenter(val view: ShowableDataView<GameListViewModel>, val dataProvider: DataProvider<GameListModel>) {
+class GameListPresenter(val view: ShowableDataView<GameListViewModel>,val authenticatedUser: AuthenticatedUser, val dataProvider: DataProvider<GameListModel>) {
 
     fun onReady() {
         refresh();
@@ -14,7 +14,7 @@ class GameListPresenter(val view: ShowableDataView<GameListViewModel>, val dataP
         val games = mutableListOf<GameViewModel>();
 
         for(gameModel: GameModel in gameListModel.games) {
-            games.add(convertSingleGameModelToViewModel(gameModel));
+            games.add(convertGameModelToViewModel(gameModel, authenticatedUser));
         }
 
         return GameListViewModel(games.toTypedArray());

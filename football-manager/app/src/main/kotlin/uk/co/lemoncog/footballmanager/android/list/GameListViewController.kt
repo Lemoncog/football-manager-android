@@ -17,7 +17,7 @@ interface GameListClickedListener {
 }
 
 class GameListViewController(val authenticatedUser: AuthenticatedUser, val context: Context, val fragmentManager: FragmentManager, val recyclerView: RecyclerView, val adapter: GameListAdapter, val layoutManager: LinearLayoutManager) : ShowableDataView<GameListViewModel>, GameListClickedListener {
-    val gameListPresenter : GameListPresenter = GameListPresenter(this, GameListModelDataProvider(authenticatedUser));
+    val gameListPresenter : GameListPresenter = GameListPresenter(this, authenticatedUser, GameListModelDataProvider(authenticatedUser));
     val gameRequestController = GameRequestController(authenticatedUser);
 
     init {

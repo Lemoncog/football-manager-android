@@ -30,7 +30,7 @@ class GameFragment : Fragment() {
         var gameId = arguments.getLong("BUNDLE_KEY_GAME_ID");
 
         UserLoginProvider().get( { authenticatedUser: AuthenticatedUser ->
-            val gamePresenter = GamePresenter(GameView(view), GameModelDataProvider(gameId, authenticatedUser));
+            val gamePresenter = GamePresenter(GameView(view), authenticatedUser, GameModelDataProvider(gameId, authenticatedUser));
             gameViewController = GameViewController(gameId, authenticatedUser, gamePresenter);
         }, {})
 

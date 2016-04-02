@@ -5,6 +5,6 @@ import uk.co.lemoncog.footballmanager.core.DataProvider
 
 class UserLoginProvider : DataProvider<AuthenticatedUser> {
     override fun get(success: (AuthenticatedUser) -> Unit, failure: () -> Unit) {
-        success(AuthenticatedUser("e3409875d642bcab5afc8d3695644938"))
+        success(AuthenticatedUser("e3409875d642bcab5afc8d3695644938", "testfootballaccount@test.com"))
     }
 }

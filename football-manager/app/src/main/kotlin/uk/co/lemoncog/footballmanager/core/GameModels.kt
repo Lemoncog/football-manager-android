@@ -19,7 +19,7 @@ data class GameRequestReply(val status: String);
 //testfootballaccount@test.com
 //test12345
 data class User(val userName: String,val password: String);
-data class AuthenticatedUser(val token: String);
+data class AuthenticatedUser(val token: String, val email : String);
 
 
 

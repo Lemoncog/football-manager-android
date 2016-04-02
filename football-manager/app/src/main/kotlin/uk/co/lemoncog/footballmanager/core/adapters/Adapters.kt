@@ -28,14 +28,11 @@ fun parseServerDate(stringDate: String) : Date {
     return dateFormat.parse(stringDate);
 }
 
-fun convertSingleGameModelToViewModel(gameModel: GameModel) : GameViewModel {
+fun convertGameModelToViewModel(gameModel: GameModel, user: AuthenticatedUser) : GameViewModel {
     val sdf = SimpleDateFormat("EEE, d MMM yyyy, hh:mm aaa");
     val prettyDate = sdf.format(gameModel.date);
-    return GameViewModel(gameModel.id, gameModel.name, gameModel.description, prettyDate, false, gameModel.replies.count());
-}
 
-fun convertGameModelToViewModel(gameModel: GameModel) : GameViewModel {
-    val sdf = SimpleDateFormat("EEE, d MMM yyyy, hh:mm aaa");
-    val prettyDate = sdf.format(gameModel.date);
-    return GameViewModel(gameModel.id, gameModel.name, gameModel.description, prettyDate, false, gameModel.replies.count());
+    val inGame = gameModel.replies.filter { it.user == user.email }.count() > 0;
+
+    return GameViewModel(gameModel.id, gameModel.name, gameModel.description, prettyDate, inGame, gameModel.replies.count());
 }

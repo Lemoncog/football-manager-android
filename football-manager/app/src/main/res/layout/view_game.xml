@@ -60,15 +60,7 @@
                 android:id="@+id/game_accept"
                 android:text="I'M IN"
                 style="@style/Button"
-                android:textColor="@color/colorAccent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/game_bench"
-                android:text="BENCH ME"
-                style="@style/Button"
-                android:textColor="@color/textPrimary"
+                android:textColor="@drawable/text_selectable_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </android.support.v7.widget.LinearLayoutCompat>

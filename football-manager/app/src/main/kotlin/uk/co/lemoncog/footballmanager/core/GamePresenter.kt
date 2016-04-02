@@ -3,7 +3,7 @@ package uk.co.lemoncog.footballmanager.core
 import uk.co.lemoncog.footballmanager.core.adapters.convertGameModelToViewModel
 
 
-class GamePresenter(val view: StatefulView<GameViewModel>, val dataProvider: DataProvider<GameModel>) {
+class GamePresenter(val view: StatefulView<GameViewModel>, val authenticatedUser: AuthenticatedUser, val dataProvider: DataProvider<GameModel>) {
     val actionListeners = mutableListOf<ActionListener>();
 
     init {
@@ -14,10 +14,6 @@ class GamePresenter(val view: StatefulView<GameViewModel>, val dataProvider: Dat
         refresh();
     }
 
-    private fun gameModelTogameViewModel(gameModel: GameModel) : GameViewModel {
-       return convertGameModelToViewModel(gameModel);
-    }
-
     fun onAcceptClicked() {
         for (listener in actionListeners) {
             listener.onTrigger();
@@ -25,7 +21,7 @@ class GamePresenter(val view: StatefulView<GameViewModel>, val dataProvider: Dat
     }
 
     fun refresh() {
-        var success = { gameModel: GameModel ->  view.show(gameModelTogameViewModel(gameModel)) }
+        var success = { gameModel: GameModel ->  view.show(convertGameModelToViewModel(gameModel, authenticatedUser)) }
         var failure = {};
 
         dataProvider.get(success, failure);
