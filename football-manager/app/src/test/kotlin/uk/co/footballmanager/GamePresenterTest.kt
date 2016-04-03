@@ -37,7 +37,7 @@ class GamePresenterTest : StatefulView<GameViewModel>, ActionListener {
     @Throws(Exception::class)
     fun givenAGameIsAvailable_ThenDisplayLatestGame() {
         val dataProvider = TestDataProvider();
-        val presenter = GamePresenter(this, dataProvider);
+        val presenter = GamePresenter(this, AuthenticatedUser("test_token", "test@email.com"),  dataProvider);
 
         presenter.onReady();
 
@@ -47,7 +47,7 @@ class GamePresenterTest : StatefulView<GameViewModel>, ActionListener {
     @Test
     fun givenUserAccepts_ThAGameEventIsEmenitted() {
         val dataProvider = TestDataProvider();
-        val presenter = GamePresenter(this, dataProvider);
+        val presenter = GamePresenter(this, AuthenticatedUser("test_token", "test@email.com"), dataProvider);
 
         presenter.actionListeners.add(this);
 

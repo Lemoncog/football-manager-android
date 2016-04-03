@@ -19,7 +19,7 @@ class GameLoginControllerTest : GameLoginNavigation {
     fun createSuccessfulLoginProvider(): DataProvider<AuthenticatedUser> {
         return object: DataProvider<AuthenticatedUser> {
             override fun get(success: (AuthenticatedUser) -> Unit, failure: () -> Unit) {
-                success(AuthenticatedUser("someTokenOkay"))
+                success(AuthenticatedUser("someTokenOkay", "someemail@email.com"))
             }
         }
     }

@@ -32,7 +32,7 @@ class GameRequestControllerTest {
 
     @Test @Ignore
     fun givenRequestToPlayGameIsMade_AndThereAreSpaces_ThenEmitRequestSuccessEvent() {
-        val gameRequestController = GameRequestController(AuthenticatedUser("test_token"));
+        val gameRequestController = GameRequestController(AuthenticatedUser("test_token", "test@email.com"));
 
         gameRequestController.requestToPlay(1, {
             successEventEmitted = true;
@@ -44,7 +44,7 @@ class GameRequestControllerTest {
     @Test @Ignore
     fun givenRequestToPayIsMade_AndThereAreNoSpaces_ThenEmitFailureEvent() {
         val dataProvider = createFailureProvider();
-        val gameRequestController = GameRequestController(AuthenticatedUser("test_token"));
+        val gameRequestController = GameRequestController(AuthenticatedUser("test_token", "test@email.com"));
 
         gameRequestController.requestToPlay(1, {}, {
             failureEventEmitted = true;
