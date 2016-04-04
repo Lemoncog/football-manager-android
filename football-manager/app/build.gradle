@@ -11,6 +11,8 @@ Integer getVersionCodeFunc() {
 
 task testVersions() {
     println getVersionCodeFunc() + ':' + getVersionNameFunc()
+
+    println keystorePath + keystorePassword + keyAlias + keyPassword
 }
 
 String getVersionNameFunc() {
@@ -31,6 +33,15 @@ android {
         targetSdkVersion 23
         versionCode getVersionCodeFunc()
         versionName getVersionNameFunc()
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(keystorePath)
+            storePassword keystorePassword
+            keyAlias keyAlias
+            keyPassword keyPassword
+        }
     }
 
     sourceSets {
