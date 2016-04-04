@@ -1,6 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+
+def keystorePath = "somePath"
+def keystorePassword = "keystorePassword"
+def keyAliasVal = project.hasProperty('keyAlias') ? keyAlias : "sss"
+def keyPasswordVal = project.hasProperty('keyPassword') ? keyPassword : "keyPassword"
+
 Integer getVersionCodeFunc() {
     if(project.hasProperty('versionCode') && versionCode.isNumber()) {
         return versionCode.toInteger()
@@ -11,8 +17,7 @@ Integer getVersionCodeFunc() {
 
 task testVersions() {
     println getVersionCodeFunc() + ':' + getVersionNameFunc()
-
-    println keystorePath + keystorePassword + keyAlias + keyPassword
+    println keystorePath + keystorePassword + keyAliasVal + keyPasswordVal
 }
 
 String getVersionNameFunc() {
@@ -39,8 +44,8 @@ android {
         release {
             storeFile file(keystorePath)
             storePassword keystorePassword
-            keyAlias keyAlias
-            keyPassword keyPassword
+            keyAlias keyAliasVal
+            keyPassword keyPasswordVal
         }
     }
 
