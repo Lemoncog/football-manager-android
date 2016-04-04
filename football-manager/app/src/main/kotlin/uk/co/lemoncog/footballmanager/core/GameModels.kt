@@ -21,6 +21,7 @@ data class GameRequestReply(val status: String);
 data class User(val userName: String,val password: String);
 data class AuthenticatedUser(val token: String, val email : String);
 data class LoginFailure(val reason: String);
+data class LoginModel(val username: String, val password: String);
 
 val FailureNoAccount = "FAILURE_NO_ACCOUNT";
 
