@@ -1,11 +1,11 @@
 package uk.co.lemoncog.footballmanager.android.account
 
-import android.R
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import uk.co.lemoncog.footballmanager.R
 
 class LoginViewController {
     fun onResume() {
