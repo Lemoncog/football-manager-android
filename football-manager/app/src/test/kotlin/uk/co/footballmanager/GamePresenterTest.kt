@@ -8,8 +8,8 @@ import uk.co.lemoncog.footballmanager.androidcosofretrofit.secondGameReply
 import uk.co.lemoncog.footballmanager.core.*
 import java.util.*
 
-class TestDataProvider() : DataProvider<GameModel> {
-    override fun get(success: (GameModel) -> Unit, failure: () -> Unit) {
+class TestDataProvider() : DataProvider<GameModel, Throwable> {
+    override fun get(success: (GameModel) -> Unit, failure: (Throwable) -> Unit) {
         success(GameModel(0, "Jessica", "JessicaDescr", Date(), Date(), Date(), arrayOf(firstGameReply, secondGameReply)));
     }
 }

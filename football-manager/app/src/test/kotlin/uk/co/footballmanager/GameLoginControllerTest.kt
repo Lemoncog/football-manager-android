@@ -2,24 +2,30 @@ package uk.co.footballmanager
 
 import org.junit.Test
 import org.junit.Assert.*
-import uk.co.lemoncog.footballmanager.core.AuthenticatedUser
-import uk.co.lemoncog.footballmanager.core.DataProvider
-import uk.co.lemoncog.footballmanager.core.GameLoginController
-import uk.co.lemoncog.footballmanager.core.GameLoginNavigation
+import uk.co.lemoncog.footballmanager.core.*
 
 
 class GameLoginControllerTest : GameLoginNavigation {
 
     var navigatedToGameScreen : Boolean = false;
+    var navigatedToLoginScreen : Boolean = false;
 
     override fun navigateToGameScreen() {
         navigatedToGameScreen = true;
     }
 
-    fun createSuccessfulLoginProvider(): DataProvider<AuthenticatedUser> {
-        return object: DataProvider<AuthenticatedUser> {
-            override fun get(success: (AuthenticatedUser) -> Unit, failure: () -> Unit) {
+    fun createSuccessfulLoginProvider(): DataProvider<AuthenticatedUser, LoginFailure> {
+        return object: DataProvider<AuthenticatedUser, LoginFailure> {
+            override fun get(success: (AuthenticatedUser) -> Unit, failure: (LoginFailure) -> Unit) {
                 success(AuthenticatedUser("someTokenOkay", "someemail@email.com"))
+            }
+        }
+    }
+
+    fun createFailureLoginProvider(): DataProvider<AuthenticatedUser, LoginFailure> {
+        return object: DataProvider<AuthenticatedUser, LoginFailure> {
+            override fun get(success: (AuthenticatedUser) -> Unit, failure: (LoginFailure) -> Unit) {
+                failure(LoginFailure(FailureNoAccount));
             }
         }
     }
@@ -31,6 +37,15 @@ class GameLoginControllerTest : GameLoginNavigation {
         gameLoginController.onReady();
 
         assertTrue(navigatedToGameScreen);
+    }
+
+    @Test
+    fun givenUserHasNoAccount_NavigateToLoginScreen() {
+        val gameLoginController = GameLoginController(createFailureLoginProvider(), this);
+
+        gameLoginController.onReady();
+
+        assertTrue(navigatedToLoginScreen)
     }
 
 }

@@ -9,8 +9,8 @@ import uk.co.lemoncog.footballmanager.android.services.GameService
 import uk.co.lemoncog.footballmanager.core.*
 import uk.co.lemoncog.footballmanager.core.adapters.serverGameListModelToGameListModel
 
-class GameListModelDataProvider(val authenticatedUser: AuthenticatedUser) : DataProvider<GameListModel> {
-    override fun get(success: (GameListModel) -> Unit, failure: () -> Unit) {
+class GameListModelDataProvider(val authenticatedUser: AuthenticatedUser) : DataProvider<GameListModel, Unit> {
+    override fun get(success: (GameListModel) -> Unit, failure: (Unit) -> Unit) {
         val retrofit = Retrofit.Builder().baseUrl("https://footballmanagerapp.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

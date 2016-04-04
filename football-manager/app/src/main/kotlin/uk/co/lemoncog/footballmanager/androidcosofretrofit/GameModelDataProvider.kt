@@ -21,8 +21,8 @@ var gameModel = GameModel(1,
         arrayOf(firstGameReply, secondGameReply));
 
 
-class GameModelDataProvider(val id: Long, val authenticatedUser: AuthenticatedUser) : DataProvider<GameModel> {
-    override fun get(success: (GameModel) -> Unit, failure: () -> Unit) {
+class GameModelDataProvider(val id: Long, val authenticatedUser: AuthenticatedUser) : DataProvider<GameModel, Throwable> {
+    override fun get(success: (GameModel) -> Unit, failure: (Throwable) -> Unit) {
         val retrofit = Retrofit.Builder().baseUrl("https://footballmanagerapp.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

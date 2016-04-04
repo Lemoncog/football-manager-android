@@ -20,6 +20,9 @@ data class GameRequestReply(val status: String);
 //test12345
 data class User(val userName: String,val password: String);
 data class AuthenticatedUser(val token: String, val email : String);
+data class LoginFailure(val reason: String);
+
+val FailureNoAccount = "FAILURE_NO_ACCOUNT";
 
 
 

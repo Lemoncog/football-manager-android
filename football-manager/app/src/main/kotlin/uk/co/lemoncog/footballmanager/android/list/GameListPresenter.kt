@@ -3,7 +3,7 @@ package uk.co.lemoncog.footballmanager.android.list
 import uk.co.lemoncog.footballmanager.core.*
 import uk.co.lemoncog.footballmanager.core.adapters.convertGameModelToViewModel
 
-class GameListPresenter(val view: ShowableDataView<GameListViewModel>,val authenticatedUser: AuthenticatedUser, val dataProvider: DataProvider<GameListModel>) {
+class GameListPresenter(val view: ShowableDataView<GameListViewModel>,val authenticatedUser: AuthenticatedUser, val dataProvider: DataProvider<GameListModel, Unit>) {
 
     fun onReady() {
         refresh();
@@ -22,7 +22,7 @@ class GameListPresenter(val view: ShowableDataView<GameListViewModel>,val authen
 
     fun refresh() {
         var success = { gameModel: GameListModel ->  view.show(gameModelToGameListViewModel(gameModel)) }
-        var failure = {};
+        var failure = { nothing: Unit -> };
 
         dataProvider.get(success, failure);
     }

@@ -9,8 +9,8 @@ import uk.co.lemoncog.footballmanager.android.services.GameService
 import uk.co.lemoncog.footballmanager.core.*
 
 
-class GameReplyDataProvider(val id: Long, val authenticatedUser: AuthenticatedUser) : DataProvider<GameRequestReply> {
-    override fun get(success: (GameRequestReply) -> Unit, failure: () -> Unit) {
+class GameReplyDataProvider(val id: Long, val authenticatedUser: AuthenticatedUser) : DataProvider<GameRequestReply, Throwable> {
+    override fun get(success: (GameRequestReply) -> Unit, failure: (Throwable) -> Unit) {
         val retrofit = Retrofit.Builder().baseUrl("https://footballmanagerapp.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -21,7 +21,7 @@ class GameReplyDataProvider(val id: Long, val authenticatedUser: AuthenticatedUs
             }
 
             override fun onFailure(call: Call<ServerGamePostReply>, t: Throwable) {
-                failure();
+                failure(t);
             }
 
         });
