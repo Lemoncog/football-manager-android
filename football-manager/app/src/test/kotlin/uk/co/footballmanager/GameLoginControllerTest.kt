@@ -6,12 +6,15 @@ import uk.co.lemoncog.footballmanager.core.*
 
 
 class GameLoginControllerTest : GameLoginNavigation {
-
     var navigatedToGameScreen : Boolean = false;
     var navigatedToLoginScreen : Boolean = false;
 
     override fun navigateToGameScreen() {
         navigatedToGameScreen = true;
+    }
+
+    override fun navigateToLoginScreen() {
+        navigatedToLoginScreen =  true;
     }
 
     fun createSuccessfulLoginProvider(): DataProvider<AuthenticatedUser, LoginFailure> {
