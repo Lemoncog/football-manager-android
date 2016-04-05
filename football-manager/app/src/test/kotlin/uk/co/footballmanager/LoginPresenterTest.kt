@@ -5,24 +5,42 @@ import org.junit.Test
 import uk.co.lemoncog.footballmanager.core.LoginModel
 
 
-class LoginPresenterTest {
+interface LoginView {
+    fun getUsername() : String;
+    fun getPassword() : String;
+}
 
-    class LoginPresenter {
+class LoginPresenter(val loginView: LoginView) {
 
-        var loginActionListener: ((LoginModel) -> Unit)? = null;
+    var loginActionListener: ((LoginModel) -> Unit)? = null;
 
-        fun onReady() {
-        }
+    fun onReady() {
+    }
 
-        fun loginPressed() {
-            loginActionListener?.invoke(LoginModel("Jason", "jasonPassword"));
-        }
+    fun loginPressed() {
+        loginActionListener?.invoke(LoginModel(loginView.getUsername(), loginView.getPassword()));
+    }
+}
+
+class LoginPresenterTest : LoginView {
+    var stubUsername = "";
+    var stubPassword = "";
+
+    override fun getUsername(): String {
+        return stubUsername;
+    }
+
+    override fun getPassword(): String {
+        return stubPassword;
     }
 
     @Test
     @Throws(Exception::class)
     fun givenUserEntersUserNameAndPassword_WhenUserPressesEnter_ThenLoginAttemptEventIsEmitted() {
-        val loginPresenter = LoginPresenter();
+        stubUsername = "Jason";
+        stubPassword = "jasonPassword";
+
+        val loginPresenter = LoginPresenter(this);
         var loginEventEmitted = false;
 
         loginPresenter.loginActionListener = { loginModel: LoginModel ->
@@ -41,7 +59,10 @@ class LoginPresenterTest {
     @Test
     @Throws(Exception::class)
     fun givenUserEntersUserNameAndPassword_WhenUserPressesEnter_ThenLoginAttemptEventIsEmittedAndDataValidated() {
-        val loginPresenter = LoginPresenter();
+        stubUsername = "anotherUsername";
+        stubPassword = "anotherPassword";
+
+        val loginPresenter = LoginPresenter(this);
         var loginEventEmitted = false;
 
         loginPresenter.loginActionListener = { loginModel: LoginModel ->
