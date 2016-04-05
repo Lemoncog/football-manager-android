@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.android.UserLoginProvider
+import uk.co.lemoncog.footballmanager.android.account.getAccountSharedPrefs
 import uk.co.lemoncog.footballmanager.core.AuthenticatedUser
 
 class GameListFragment : Fragment() {
@@ -23,7 +24,7 @@ class GameListFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context);
 
         //Look at this NPE waiting to happen!
-        UserLoginProvider().get( { authenticatedUser: AuthenticatedUser ->
+        UserLoginProvider(getAccountSharedPrefs(activity)).get( { authenticatedUser: AuthenticatedUser ->
             gameViewController = GameListViewController(authenticatedUser, context, fragmentManager, recyclerView, adapter, layoutManager)
         }, {})
 

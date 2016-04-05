@@ -3,24 +3,8 @@ package uk.co.footballmanager
 import org.junit.Assert.*;
 import org.junit.Test
 import uk.co.lemoncog.footballmanager.core.LoginModel
-
-
-interface LoginView {
-    fun getUsername() : String;
-    fun getPassword() : String;
-}
-
-class LoginPresenter(val loginView: LoginView) {
-
-    var loginActionListener: ((LoginModel) -> Unit)? = null;
-
-    fun onReady() {
-    }
-
-    fun loginPressed() {
-        loginActionListener?.invoke(LoginModel(loginView.getUsername(), loginView.getPassword()));
-    }
-}
+import uk.co.lemoncog.footballmanager.core.account.LoginPresenter
+import uk.co.lemoncog.footballmanager.core.account.LoginView
 
 class LoginPresenterTest : LoginView {
     var stubUsername = "";

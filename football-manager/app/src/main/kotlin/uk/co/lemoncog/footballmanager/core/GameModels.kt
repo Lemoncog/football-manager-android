@@ -8,6 +8,7 @@ class ServerGameListModel(var games: List<ServerGameModel>);
 data class ServerGameModel(val id: Long, val name: String, val description: String, val date: String, val created_at: String, val updated_at: String, val replies : Array<ServerGameReply>);
 data class ServerGameReply(val id: Long, val user: String, val created_at: String, val updated_at: String);
 data class ServerGamePostReply(val status: String);
+data class ServerLoginReply(val status: String, val token: String);
 
 //Buisness Models
 data class GameListModel(val games: Array<GameModel>);
