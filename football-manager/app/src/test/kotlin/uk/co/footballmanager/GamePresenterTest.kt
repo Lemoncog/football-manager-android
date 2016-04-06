@@ -15,6 +15,10 @@ class TestDataProvider() : DataProvider<GameModel, Throwable> {
 }
 
 class GamePresenterTest : StatefulView<GameViewModel>, ActionListener {
+    override fun showError(throwable: Throwable) {
+        throw UnsupportedOperationException()
+    }
+
     override fun setViewClickedListener(clicked: () -> Unit) {
         throw UnsupportedOperationException()
     }

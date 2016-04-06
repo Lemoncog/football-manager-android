@@ -7,6 +7,9 @@ import uk.co.lemoncog.footballmanager.core.account.LoginPresenter
 import uk.co.lemoncog.footballmanager.core.account.LoginView
 
 class LoginPresenterTest : LoginView {
+    override fun setLoginClickedListener(clicked: () -> Unit) {
+    }
+
     var stubUsername = "";
     var stubPassword = "";
 
