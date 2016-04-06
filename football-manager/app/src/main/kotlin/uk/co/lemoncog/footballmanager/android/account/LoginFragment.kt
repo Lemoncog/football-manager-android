@@ -7,47 +7,18 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.android.list.GameListFragment
 import uk.co.lemoncog.footballmanager.android.list.showToastFor
-import uk.co.lemoncog.footballmanager.android.services.GameService
-import uk.co.lemoncog.footballmanager.core.*
+import uk.co.lemoncog.footballmanager.androidcosofretrofit.LoginStepsProvider
+import uk.co.lemoncog.footballmanager.core.AuthenticatedUser
+import uk.co.lemoncog.footballmanager.core.GameLoginNavigation
+import uk.co.lemoncog.footballmanager.core.LoginFailure
+import uk.co.lemoncog.footballmanager.core.LoginModel
 import uk.co.lemoncog.footballmanager.core.account.LoginPresenter
 
 fun getAccountSharedPrefs(context: Context) : SharedPreferences {
     return context.getSharedPreferences("USER_STORAGE", Context.MODE_PRIVATE);
-}
-
-class LoginStepsProvider(val username: String, val password: String) : DataProvider<AuthenticatedUser, LoginFailure> {
-    override fun get(success: (AuthenticatedUser) -> Unit, failure: (LoginFailure) -> Unit) {
-
-        val retrofit = Retrofit.Builder().baseUrl("https://footballmanagerapp.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        val call = retrofit.create<GameService>(GameService::class.java).login(username, password);
-
-        call.enqueue(object : Callback<ServerLoginReply> {
-            override fun onResponse(call: Call<ServerLoginReply>, response: Response<ServerLoginReply>) {
-
-                if(response.body().status.equals(ServerLoginSuccess)) {
-                    success(AuthenticatedUser(response.body().token, username));
-                } else
-                {
-                    failure(LoginFailure(response.body().status));
-                }
-            }
-
-            override fun onFailure(call: Call<ServerLoginReply>, t: Throwable) {
-                failure(LoginFailure(t.message as String));
-            }
-        });
-
-    }
 }
 
 class LoginWizard {
@@ -59,19 +30,6 @@ class LoginWizard {
         }, { serverLoginFailure : LoginFailure ->
             failure(serverLoginFailure);
         });
-    }
-}
-
-interface DataWriter<T> {
-    fun write(value : T, success: (T) -> Unit);
-}
-
-class AuthenticatedUserWriter(val sharedPrefs: SharedPreferences) : DataWriter<AuthenticatedUser> {
-    override fun write(value: AuthenticatedUser, success: (AuthenticatedUser) -> Unit) {
-        if(sharedPrefs.edit().putString("username", value.email)
-        .putString("token", value.token).commit()) {
-            success(value);
-        }
     }
 }
 
