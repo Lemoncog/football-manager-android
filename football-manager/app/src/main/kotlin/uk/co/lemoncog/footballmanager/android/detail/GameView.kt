@@ -4,10 +4,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import uk.co.lemoncog.footballmanager.R
+import uk.co.lemoncog.footballmanager.android.list.showToastFor
 import uk.co.lemoncog.footballmanager.core.GameViewModel
 import uk.co.lemoncog.footballmanager.core.StatefulView
 
 class GameView(val root: View) : StatefulView<GameViewModel> {
+    override fun showError(throwable: Throwable) {
+        showToastFor(root.context, throwable);
+    }
+
     val title : TextView = root.findViewById(R.id.game_title) as TextView;
     val whenValue : TextView = root.findViewById(R.id.game_when_value) as TextView;
     val repliesSoFar : TextView = root.findViewById(R.id.game_replies_so_far) as TextView;

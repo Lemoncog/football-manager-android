@@ -17,6 +17,10 @@ interface GameListClickedListener {
 }
 
 class GameListViewController(val authenticatedUser: AuthenticatedUser, val context: Context, val fragmentManager: FragmentManager, val recyclerView: RecyclerView, val adapter: GameListAdapter, val layoutManager: LinearLayoutManager) : ShowableDataView<GameListViewModel>, GameListClickedListener {
+    override fun showError(throwable: Throwable) {
+        showToastFor(context, throwable);
+    }
+
     val gameListPresenter : GameListPresenter = GameListPresenter(this, authenticatedUser, GameListModelDataProvider(authenticatedUser));
     val gameRequestController = GameRequestController(authenticatedUser);
 
@@ -48,6 +52,7 @@ class GameListViewController(val authenticatedUser: AuthenticatedUser, val conte
                 Toast.makeText(context, gameRequestReply.status, Toast.LENGTH_SHORT).show();
                 gameListPresenter.refresh();
         }, {
+            throwable : Throwable -> showToastFor(context, throwable);
         });
     }
 }

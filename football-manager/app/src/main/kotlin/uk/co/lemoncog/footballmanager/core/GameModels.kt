@@ -9,6 +9,9 @@ data class ServerGameModel(val id: Long, val name: String, val description: Stri
 data class ServerGameReply(val id: Long, val user: String, val created_at: String, val updated_at: String);
 data class ServerGamePostReply(val status: String);
 data class ServerLoginReply(val status: String, val token: String);
+data class ServerLoginFailure(val status: String);
+
+val ServerLoginSuccess = "success"
 
 //Buisness Models
 data class GameListModel(val games: Array<GameModel>);

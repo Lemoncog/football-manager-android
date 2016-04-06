@@ -35,7 +35,7 @@ class GameModelDataProvider(val id: Long, val authenticatedUser: AuthenticatedUs
             }
 
             override fun onFailure(call: Call<ServerGameModel>, t: Throwable) {
-                throw UnsupportedOperationException()
+                failure(t);
             }
         })
     }

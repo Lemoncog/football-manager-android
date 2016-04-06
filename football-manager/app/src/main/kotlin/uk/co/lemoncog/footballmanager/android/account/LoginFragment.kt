@@ -14,6 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uk.co.lemoncog.footballmanager.R
 import uk.co.lemoncog.footballmanager.android.list.GameListFragment
+import uk.co.lemoncog.footballmanager.android.list.showToastFor
 import uk.co.lemoncog.footballmanager.android.services.GameService
 import uk.co.lemoncog.footballmanager.core.*
 import uk.co.lemoncog.footballmanager.core.account.LoginPresenter
@@ -22,8 +23,8 @@ fun getAccountSharedPrefs(context: Context) : SharedPreferences {
     return context.getSharedPreferences("USER_STORAGE", Context.MODE_PRIVATE);
 }
 
-class LoginStepsProvider(val username: String, val password: String) : DataProvider<AuthenticatedUser, Throwable> {
-    override fun get(success: (AuthenticatedUser) -> Unit, failure: (Throwable) -> Unit) {
+class LoginStepsProvider(val username: String, val password: String) : DataProvider<AuthenticatedUser, LoginFailure> {
+    override fun get(success: (AuthenticatedUser) -> Unit, failure: (LoginFailure) -> Unit) {
 
         val retrofit = Retrofit.Builder().baseUrl("https://footballmanagerapp.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -32,11 +33,17 @@ class LoginStepsProvider(val username: String, val password: String) : DataProvi
 
         call.enqueue(object : Callback<ServerLoginReply> {
             override fun onResponse(call: Call<ServerLoginReply>, response: Response<ServerLoginReply>) {
-                success(AuthenticatedUser(response.body().token, username));
+
+                if(response.body().status.equals(ServerLoginSuccess)) {
+                    success(AuthenticatedUser(response.body().token, username));
+                } else
+                {
+                    failure(LoginFailure(response.body().status));
+                }
             }
 
             override fun onFailure(call: Call<ServerLoginReply>, t: Throwable) {
-                failure(t);
+                failure(LoginFailure(t.message as String));
             }
         });
 
@@ -44,13 +51,13 @@ class LoginStepsProvider(val username: String, val password: String) : DataProvi
 }
 
 class LoginWizard {
-    fun login(username: String, password: String, success: (AuthenticatedUser) -> Unit, failure: (Throwable) -> Unit) {
+    fun login(username: String, password: String, success: (AuthenticatedUser) -> Unit, failure: (LoginFailure) -> Unit) {
         var loginStepsProvider = LoginStepsProvider(username, password);
 
         loginStepsProvider.get({ authenticatedUser : AuthenticatedUser ->
             success(authenticatedUser)
-        }, { throwable : Throwable ->
-            failure(throwable);
+        }, { serverLoginFailure : LoginFailure ->
+            failure(serverLoginFailure);
         });
     }
 }
@@ -68,7 +75,7 @@ class AuthenticatedUserWriter(val sharedPrefs: SharedPreferences) : DataWriter<A
     }
 }
 
-class LoginViewController(val loginPresenter: LoginPresenter, val authenticatedUserWriter: AuthenticatedUserWriter, val loginWizard: LoginWizard, val gameLoginNavigation: GameLoginNavigation) {
+class LoginViewController(val context: Context, val loginPresenter: LoginPresenter, val authenticatedUserWriter: AuthenticatedUserWriter, val loginWizard: LoginWizard, val gameLoginNavigation: GameLoginNavigation) {
     fun onResume() {
         loginPresenter.onReady();
 
@@ -81,7 +88,8 @@ class LoginViewController(val loginPresenter: LoginPresenter, val authenticatedU
                 });
 
             }, {
-
+                loginFailure : LoginFailure ->
+                showToastFor(context, loginFailure);
             });
         }
     }
@@ -92,7 +100,7 @@ class LoginViewController(val loginPresenter: LoginPresenter, val authenticatedU
 
 class LoginFragment : Fragment(), GameLoginNavigation {
     override fun navigateToGameScreen() {
-        activity.supportFragmentManager.beginTransaction().add(R.id.fragment_container, GameListFragment(), "game_frag").commit();
+        activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, GameListFragment(), "game_frag").commit();
     }
 
     override fun navigateToLoginScreen() {
@@ -106,7 +114,7 @@ class LoginFragment : Fragment(), GameLoginNavigation {
 
         val sharedPrefs = getAccountSharedPrefs(activity);
 
-        loginViewController = LoginViewController(LoginPresenter(LoginViewImpl(view.findViewById(R.id.login_view))), AuthenticatedUserWriter(sharedPrefs), LoginWizard(), this);
+        loginViewController = LoginViewController(context, LoginPresenter(LoginViewImpl(view.findViewById(R.id.login_view))), AuthenticatedUserWriter(sharedPrefs), LoginWizard(), this);
 
         return view;
     }
